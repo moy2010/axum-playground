@@ -1,4 +1,4 @@
-use axum_playground::app;
+use axum_playground::{app, services::ServicesBuilder};
 
 #[tokio::main]
 async fn main() {
@@ -7,5 +7,9 @@ async fn main() {
         .await
         .unwrap();
 
-    axum::serve(listener, app()).await.unwrap();
+    let services = ServicesBuilder {
+        ..Default::default()
+    }.build();
+
+    axum::serve(listener, app(services)).await.unwrap();
 }

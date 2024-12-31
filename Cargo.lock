@@ -93,6 +93,7 @@ dependencies = [
 name = "axum-playground"
 version = "0.1.0"
 dependencies = [
+ "async-trait",
  "axum",
  "http-body-util",
  "hyper-util",
