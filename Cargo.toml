@@ -7,4 +7,9 @@ edition = "2021"
 
 [dependencies]
 axum = "0.7.9"
+serde_json = "1.0"
 tokio = { version = "1.42.0", features = ["full"] }
+
+[dev-dependencies]
+http-body-util = "0.1.0"
+hyper-util = { version = "0.1", features = ["client", "http1", "client-legacy"] }
