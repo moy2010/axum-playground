@@ -3,14 +3,40 @@ name = "axum-playground"
 version = "0.1.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
 async-trait = "0.1.83"
-axum = "0.7.9"
+axum = { version = "0.7.9", features = ["macros"] }
+chrono = { version = "0.4.39", features = ["serde"] }
+figment = { version = "0.10.14", features = [
+    "test",
+    "env",
+    "toml",
+    "yaml",
+    "json",
+] }
+reqwest = { version = "0.11.22", default-features = false, features = ["json"] }
+secrecy = { version = "0.10.3", features = ["serde"] }
+serde = { version = "1.0.217", features = ["derive"] }
 serde_json = "1.0"
+serde_with = "3.12.0"
+sqlx = { version = "0.8.3", features = [
+    "chrono",
+    "runtime-tokio",
+    "sqlite",
+    "uuid",
+] }
 tokio = { version = "1.42.0", features = ["full"] }
+tower-http = { version = "0.6.1", features = ["trace"] }
+tracing = "0.1.36"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+unicode-segmentation = "1.12.0"
+uuid = { version = "1.12.1", features = ["serde", "v7"] }
 
 [dev-dependencies]
 http-body-util = "0.1.0"
-hyper-util = { version = "0.1", features = ["client", "http1", "client-legacy"] }
+hyper-util = { version = "0.1", features = [
+    "client",
+    "http1",
+    "client-legacy",
+] }
+mockall = "0.13.1"

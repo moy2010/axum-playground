@@ -1,0 +1,7 @@
+app_name = "demo"
+
+[logging]
+level = "INFO"
+
+[database_config]
+name = "users"

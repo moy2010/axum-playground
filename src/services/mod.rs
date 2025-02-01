@@ -1,23 +1,39 @@
 use std::sync::Arc;
 
-use simple::{SimpleService, SimpleServiceImpl};
+use sqlx::SqlitePool;
+use user::{
+    repository::UserRepositorySqLite,
+    service::{UserService, UserServiceImpl},
+};
 
-pub mod simple;
+use crate::config::models::AppConfig;
+
+pub mod user;
 
 #[derive(Clone)]
 pub struct Services {
-    pub simple: Arc<dyn SimpleService + Send + Sync>
+    pub user_service: Arc<dyn UserService + Send + Sync>,
 }
 
 #[derive(Default)]
 pub struct ServicesBuilder {
-    pub simple: Option<Arc<dyn SimpleService + Send + Sync>>
+    pub user_service: Option<Arc<dyn UserService + Send + Sync>>,
 }
 
 impl ServicesBuilder {
-    pub fn build(self) -> Services {
+    pub async fn build(self, app_config: AppConfig) -> Services {
+        let pool = SqlitePool::connect(&app_config.database_config.address)
+            .await
+            .expect("Error creating SQlite pool");
+
+        let pool = Arc::new(pool);
+
         Services {
-            simple: self.simple.unwrap_or(Arc::new(SimpleServiceImpl)) 
+            user_service: self
+                .user_service
+                .unwrap_or(Arc::new(UserServiceImpl::new(Box::new(
+                    UserRepositorySqLite::new(pool.clone()),
+                )))),
         }
     }
 }

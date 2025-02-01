@@ -1,0 +1,7 @@
+environment_type = "Development"
+
+[database_config]
+address = "sqlite:users.db"
+
+[server_config]
+address = "127.0.0.1:3000"
